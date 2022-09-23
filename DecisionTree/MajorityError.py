@@ -70,6 +70,7 @@ class ME(object):
             
             for label in vals.index.levels[0]:
                 cat = vals.loc[label,:]
+                print(cat)
                 h = 1-cat[0]/sum(cat)
                 ent += h * sum(cat)/sum(vals)
             g = initialEntropy - ent
