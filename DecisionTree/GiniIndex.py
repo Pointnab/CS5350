@@ -59,7 +59,7 @@ class GI(object):
                 cat2 = cat/sum(cat)
                 h = 0
                 for x in cat2:
-                    h += n**2
+                    h += x**2
                 h = 1 - h
                 ent += h * sum(cat)/sum(vals)
             g = initialEntropy - ent
