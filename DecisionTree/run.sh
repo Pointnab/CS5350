@@ -1,3 +1,23 @@
+echo training accuracy
+python3 ID3.py car/train.csv car/train.csv H 1
+python3 ID3.py car/train.csv car/train.csv H 2
+python3 ID3.py car/train.csv car/train.csv H 3
+python3 ID3.py car/train.csv car/train.csv H 4
+python3 ID3.py car/train.csv car/train.csv H 5
+python3 ID3.py car/train.csv car/train.csv H 6
+python3 ID3.py car/train.csv car/train.csv ME 1
+python3 ID3.py car/train.csv car/train.csv ME 2
+python3 ID3.py car/train.csv car/train.csv ME 3
+python3 ID3.py car/train.csv car/train.csv ME 4
+python3 ID3.py car/train.csv car/train.csv ME 5
+python3 ID3.py car/train.csv car/train.csv ME 6
+python3 ID3.py car/train.csv car/train.csv GI 1
+python3 ID3.py car/train.csv car/train.csv GI 2
+python3 ID3.py car/train.csv car/train.csv GI 3
+python3 ID3.py car/train.csv car/train.csv GI 4
+python3 ID3.py car/train.csv car/train.csv GI 5
+python3 ID3.py car/train.csv car/train.csv GI 6
+echo test accuracy
 python3 ID3.py car/train.csv car/test.csv H 1
 python3 ID3.py car/train.csv car/test.csv H 2
 python3 ID3.py car/train.csv car/test.csv H 3
