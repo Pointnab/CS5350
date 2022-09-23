@@ -56,9 +56,9 @@ class GI(object):
             
             for label in vals.index.levels[0]:
                 cat = vals.loc[label,:]
-                cat = cat/sum(cat)
+                cat2 = cat/sum(cat)
                 h = 0
-                for x in cat:
+                for x in cat2:
                     h += n**2
                 h = 1 - h
                 ent += h * sum(cat)/sum(vals)

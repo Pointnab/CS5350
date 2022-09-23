@@ -52,8 +52,8 @@ class ME(object):
             
             for label in vals.index.levels[0]:
                 cat = vals.loc[label,:]
-                cat = cat/sum(cat)
-                h = 1-cat[0]
+                cat2 = cat/sum(cat)
+                h = 1-cat2[0]
                 ent += h * sum(cat)/sum(vals)
             g = initialEntropy - ent
             gain.update({attribute:g})

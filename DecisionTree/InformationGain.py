@@ -54,9 +54,9 @@ class InfoGain(object):
             
             for label in vals.index.levels[0]:
                 cat = vals.loc[label,:]
-                cat = cat/sum(cat)
+                cat2 = cat/sum(cat)
                 h = 0
-                for x in cat:
+                for x in cat2:
                     h -= x*math.log(x)
                 ent += h * sum(cat)/sum(vals)
             g = initialEntropy - ent
