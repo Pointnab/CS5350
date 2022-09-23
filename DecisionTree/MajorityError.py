@@ -14,7 +14,7 @@ class ME(object):
     def __init__(self):
         self.tree = None
         self.thresholds = {}
-        self.majoirty = {}
+        self.majority = {}
         
     def train(self, data, depth = 6, b=False, u=False):
         if self.tree is None:
