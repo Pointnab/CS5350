@@ -38,7 +38,7 @@ class InfoGain(object):
         
         self.tree.addMembers(data)
         
-        self.splitMembers(self.tree, depth, u)
+        self.splitMembers(self.tree, depth)
         
         #self.tree.display()
         
