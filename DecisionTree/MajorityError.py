@@ -13,10 +13,28 @@ class ME(object):
     
     def __init__(self):
         self.tree = None
+        self.thresholds = {}
+        self.majoirty = {}
         
-    def train(self, data, depth = 6):
+    def train(self, data, depth = 6, b=False, u=False):
         if self.tree is None:
             self.tree = Node.Node()
+        
+        for attribute in data.columns:
+            if b:    
+                if data[attribute].dtype == "int64":
+                    thresh = data[attribute].median()
+                    self.thresholds.update({attribute:thresh})
+                    data.loc[data[attribute]>=thresh,attribute] = thresh
+                    data.loc[data[attribute]<thresh,attribute] = thresh-1
+        
+            if u:
+                vals = data.value_counts([attribute])
+                maj = vals.index.levels[0][0]
+                if maj == "unknown":
+                    maj = vals.index.levels[0][1]
+                self.majority.update({attribute:maj})
+                data.loc[data[attribute]=="unknown",attribute] = maj
         
         self.tree.addMembers(data)
         
@@ -69,10 +87,24 @@ class ME(object):
         for child in node.children:
             self.splitMembers(child,depth)
             
-    def test(self, data):
+    def test(self, data, b=False, u=False):
         pred = []
         
         for idx, point in data.iterrows():
+            if b:
+                for attribute in self.thresholds:
+                    thresh = self.thresholds[attribute]
+                    if point[attribute]>=thresh:
+                        point[attribute] = thresh
+                    else:
+                        point[attribute] = thresh-1
+                        
+            if u:
+                for attribute in self.majority:
+                    maj = self.majority[attribute]
+                    if point[attribute]=="unknown":
+                        point[attribute] = maj
+            
             pred.append(self.classify(point))
         
         return pred
