@@ -50,6 +50,7 @@ class AdaBoost(object):
             res[res=='no']=-1.0
             res[res=='yes']=1.0
             result = result.add(res.mul(self.alph[i]))
+            i+=1
         
         r.loc[result<0] = 'no'
         r.loc[result>=0] = 'yes'
