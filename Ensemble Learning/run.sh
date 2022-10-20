@@ -1,0 +1,1 @@
+python3 AdaBoostTest.py bank/train.csv bank/train.csv 500
