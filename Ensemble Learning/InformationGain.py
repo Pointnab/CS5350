@@ -66,7 +66,7 @@ class InfoGain(object):
         
         if len(members[lab].unique()) == 1:
             node.setLeaf()
-            node.setName(members[lab][0])
+            node.setName(members.iloc[0][lab])
             return
         
         if w:
