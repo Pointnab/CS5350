@@ -18,6 +18,9 @@ m = int(sys.argv[4])
 trainData = pd.read_csv(trainFile, sep=',', header = None)
 testData = pd.read_csv(testFile, sep=',', header=None)
 
+trainErrors = {}
+testErrors = {}
+
 for f in [2,4,6]:
     trainErr = []
     testErr = []
@@ -60,9 +63,14 @@ for f in [2,4,6]:
         print("test error: "+str(terr))
         testErr.append(terr)
         
-    plt.figure("Bagging Train and Test Errors")
-    plt.plot(range(1,t+1),trainErr)
-    plt.plot(range(1,t+1),testErr)
-    plt.ylabel("Error")
-    plt.xlabel("Iteration")
-    plt.show()
+    trainErrors.update({f:trainErr})
+    testErrors.update({f:testErr})
+    
+plt.figure("Bagging Train and Test Errors")
+for error in trainErrors.values():
+    plt.plot(range(1,t+1),error)
+for error in testErrors.values():
+    plt.plot(range(1,t+1),error)
+plt.ylabel("Error")
+plt.xlabel("Iteration")
+plt.show()

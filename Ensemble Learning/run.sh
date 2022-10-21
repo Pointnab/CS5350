@@ -4,3 +4,7 @@ echo warning: code takes a long time to test 500 trees
 python3 BagTest.py bank/train.csv bank/teset.csv 500 1000
 echo warning: code takes a long time to test 500 trees
 python3 BagBiasVar.py bank/train.csv bank/teset.csv
+echo warning: code takes a long time to test 500 trees
+python3 ForestTest.py bank/train.csv bank/teset.csv 500 1000
+echo warning: code takes a long time to test 500 trees
+python3 ForestBiasVar.py bank/train.csv bank/teset.csv

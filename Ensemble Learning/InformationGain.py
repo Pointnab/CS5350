@@ -70,7 +70,7 @@ class InfoGain(object):
         
         gain = {}
         
-        if f>len(members.columns):
+        if f>0 and f<len(members.columns)-1:
             mem = members.iloc[:,0:len(members.columns)-1]
             mem = mem.sample(f,axis=1)
             members = pd.concat([mem , members.iloc[:,-1:]],axis=1,ignore_index=False)
@@ -96,6 +96,9 @@ class InfoGain(object):
             gain.update({attribute:g})
         
         best = max(gain, key=gain.get)
+        
+        if f>0:
+            members = node.getMembers()
         
         for l in members[best].unique():
             mem = members[members[best] == l]
