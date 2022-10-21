@@ -16,7 +16,7 @@ class InfoGain(object):
         self.thresholds = {}
         self.majority = {}
         
-    def train(self, data, depth = 6, b=False, u=False, w=False):
+    def train(self, data, depth = 6, b=False, u=False, w=False, f=-1):
         if self.tree is None:
             self.tree = Node.Node()
             
@@ -38,13 +38,13 @@ class InfoGain(object):
         
         self.tree.addMembers(data)
         
-        self.splitMembers(self.tree, depth, w)
+        self.splitMembers(self.tree, depth, w, f)
         
         #self.tree.display()
         
         return
     
-    def splitMembers(self, node, depth, w):
+    def splitMembers(self, node, depth, w, f):
         if node.depth >= depth:
             node.setLeaf()
             return
@@ -70,6 +70,11 @@ class InfoGain(object):
         
         gain = {}
         
+        if f>len(members.columns):
+            mem = members.iloc[:,0:len(members.columns)-1]
+            mem = mem.sample(f,axis=1)
+            members = pd.concat([mem , members.iloc[:,-1:]],axis=1,ignore_index=False)
+            
         for attribute in members.columns:
             if attribute >= lab:
                 continue
@@ -99,7 +104,7 @@ class InfoGain(object):
             node.addChild(l,mem,node.depth+1)
         
         for child in node.children:
-            self.splitMembers(child,depth,w)
+            self.splitMembers(child,depth,w,f)
             
     def test(self, data, b=False, u=False, w=False):
         pred = []

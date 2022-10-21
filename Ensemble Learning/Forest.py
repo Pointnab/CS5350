@@ -17,9 +17,7 @@ class Forest(object):
         for i in range(t):
             tree = InformationGain.InfoGain()
             dat = data.sample(m,axis=0,replace=True)
-            feats = data.columns.sample(2)
-            dat = dat[feats]
-            tree.train(dat,depth=f,b=True)
+            tree.train(dat,depth=len(dat.columns)-1,b=True, f=f)
             self.trees.append(tree)
     
     def test(self, data):
@@ -40,9 +38,7 @@ class Forest(object):
     def step(self,data,m,f):
         tree = InformationGain.InfoGain()
         dat = data.sample(m,axis=0,replace=True)
-        feats = data.columns.sample(2)
-        dat = dat[feats]
-        tree.train(dat,depth=f,b=True)
+        tree.train(dat,depth=len(dat.columns)-1,b=True,f=f)
         self.trees.append(tree)
         
     def getTrees(self):
