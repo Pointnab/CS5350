@@ -104,14 +104,13 @@ class InfoGain(object):
     def test(self, data, b=False, u=False, w=False):
         pred = []
         
+        if b:
+            for attribute in self.thresholds:
+                thresh = self.thresholds[attribute]
+                data.loc[data[attribute]>=thresh,attribute] = thresh
+                data.loc[data[attribute]<thresh,attribute] = thresh-1
+        
         for idx, point in data.iterrows():
-            if b:
-                for attribute in self.thresholds:
-                    thresh = self.thresholds[attribute]
-                    if point[attribute]>=thresh:
-                        point[attribute] = thresh
-                    else:
-                        point[attribute] = thresh-1
             
             if u:
                 for attribute in self.majority:
