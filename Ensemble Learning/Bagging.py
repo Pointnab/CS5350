@@ -19,11 +19,10 @@ class Bagging(object):
         for i in range(t):
             tree = InformationGain.InfoGain()
             dat = data.sample(m,axis=0,replace=True)
-            tree.train(dat,depth=len(dat.columns),b=True)
+            tree.train(dat,depth=len(dat.columns)-1,b=True)
             self.trees.append(tree)
     
     def test(self, data):
-        self.error.clear()
         result = pd.Series(0.0,index=range(data.shape[0]))
         r = pd.Series(index=range(data.shape[0]),dtype=str)
         for tree in self.trees:
@@ -41,7 +40,7 @@ class Bagging(object):
     def step(self,data,m):
         tree = InformationGain.InfoGain()
         dat = data.sample(m,axis=0,replace=True)
-        tree.train(dat,depth=len(dat.columns),b=True)
+        tree.train(dat,depth=len(dat.columns)-1,b=True)
         self.trees.append(tree)
         
     def getTrees(self):
