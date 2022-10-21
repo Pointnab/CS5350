@@ -35,8 +35,9 @@ class AdaBoost(object):
             self.weights = w
             self.trees.append(tree)
     
-    def test(self, data):
-        self.error.clear()
+    def test(self, data, save=False):
+        if save:
+            self.error.clear()
         i=0
         result = pd.Series(0.0,index=range(data.shape[0]))
         r = pd.Series(index=range(data.shape[0]),dtype=str)
@@ -45,7 +46,8 @@ class AdaBoost(object):
             acc = (data[data.columns[len(data.columns)-1]] == res)
             acc = sum(acc)/len(acc)
             err = 1 - acc
-            self.error.append(err)
+            if save:
+                self.error.append(err)
             res = pd.Series(res)
             res[res=='no']=-1.0
             res[res=='yes']=1.0

@@ -78,8 +78,8 @@ class InfoGain(object):
                 vals = members.groupby([attribute,lab])[lab+1].sum()
             else:
                 vals = members.value_counts([attribute,lab])
-            ent = 0
             
+            ent = 0
             for label in vals.index.levels[0]:
                 cat = vals.loc[label,:]
                 cat2 = cat/sum(cat)
@@ -140,9 +140,14 @@ class InfoGain(object):
                         return members.iloc[0,members.shape[1]-2]
                     else:
                         return members.iloc[0,members.shape[1]-1]
-            
-                labels = members.value_counts([lab])
-                return labels.index[0][0]
+                
+                if w:
+                    labels = members.groupby([lab])[lab+1].sum()
+                    labels = labels.sort_values(ascending=False)
+                    return labels.index[0]
+                else:
+                    labels = members.value_counts([lab])
+                    return labels.index[0][0]
             
             attribute = current.getAttribute()
             for child in current.getChildren():
@@ -152,5 +157,10 @@ class InfoGain(object):
                     break
             
             if not end:
-                labels = members.value_counts([lab])
-                return labels.index[0][0]
+                if w:
+                    labels = members.groupby([lab])[lab+1].sum()
+                    labels = labels.sort_values(ascending=False)
+                    return labels.index[0]
+                else:
+                    labels = members.value_counts([lab])
+                    return labels.index[0][0]
