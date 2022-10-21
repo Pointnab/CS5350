@@ -45,18 +45,28 @@ class InfoGain(object):
         return
     
     def splitMembers(self, node, depth, w, f):
-        if node.depth >= depth:
-            node.setLeaf()
-            return
+        members = node.getMembers()     
         
-        members = node.getMembers()
         if w:
             lab = members.columns[len(members.columns)-2]
         else:
             lab = members.columns[len(members.columns)-1]
+            
+        if node.depth >= depth:
+            node.setLeaf()
+            if w:
+                labels = members.groupby([lab],sort=False)[lab+1].sum()
+                labels = labels.sort_values(ascending=False)
+                name = labels.index[0]
+            else:
+                labels = members.value_counts([lab])
+                name = labels.index[0][0]
+            node.setName(name)
+            return
         
         if len(members[lab].unique()) == 1:
             node.setLeaf()
+            node.setName(members[lab][0])
             return
         
         if w:
@@ -149,9 +159,7 @@ class InfoGain(object):
                         return members.iloc[0,members.shape[1]-1]
                 
                 if w:
-                    labels = members.groupby([lab])[lab+1].sum()
-                    labels = labels.sort_values(ascending=False)
-                    return labels.index[0]
+                    return current.getName()
                 else:
                     labels = members.value_counts([lab])
                     return labels.index[0][0]
@@ -165,9 +173,7 @@ class InfoGain(object):
             
             if not end:
                 if w:
-                    labels = members.groupby([lab])[lab+1].sum()
-                    labels = labels.sort_values(ascending=False)
-                    return labels.index[0]
+                    return current.getName()
                 else:
                     labels = members.value_counts([lab])
                     return labels.index[0][0]

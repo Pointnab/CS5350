@@ -16,12 +16,19 @@ class Node(object):
         self.members = pd.DataFrame()
         self.depth = 0
         self.isLeaf = False
+        self.name = ""
         
     def setLabel(self, name):
         self.label = name
         
     def getLabel(self):
         return self.label
+    
+    def setName(self, n):
+        self.name = n
+        
+    def getName(self):
+        return self.name
         
     def setAttribute(self, name):
         self.attribute = name
