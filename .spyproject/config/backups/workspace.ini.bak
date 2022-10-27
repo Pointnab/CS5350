@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['DecisionTree\\ID3.py', 'DecisionTree\\ID3bin.py', 'DecisionTree\\InformationGain.py', 'DecisionTree\\GiniIndex.py', 'DecisionTree\\MajorityError.py', 'DecisionTree\\Node.py', 'DecisionTree\\run.sh', 'DecisionTree\\bank\\data-desc.txt', 'DecisionTree\\bank\\test.csv']
+recent_files = ['Linear Regression\\GD.py', 'Linear Regression\\concrete\\concrete\\data-desc.txt', 'Linear Regression\\run.sh', 'Linear Regression\\BatchTest.py', 'Linear Regression\\concrete\\concrete\\train.csv', 'Ensemble Learning\\InformationGain.py', 'Linear Regression\\SGDTest.py', 'Linear Regression\\SGD.py']
 
 [main]
 version = 0.2.0
