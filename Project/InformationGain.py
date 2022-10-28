@@ -121,28 +121,37 @@ class InfoGain(object):
         for child in node.children:
             self.splitMembers(child,depth,w,f)
             
-    def test(self, data, b=False, u=False, w=False):
+    def test(self, data, b=False, u=False, w=False, p=False):
         pred = []
         
         if b:
             for attribute in self.thresholds:
                 thresh = self.thresholds[attribute]
-                data.loc[data[attribute]>=thresh,attribute] = thresh
-                data.loc[data[attribute]<thresh,attribute] = thresh-1
+                if len(data.shape)<2:
+                    if data[attribute] >= thresh:
+                        data[attribute] = thresh
+                    else:
+                        data[attribute] = thresh-1
+                else:
+                    data.loc[data[attribute]>=thresh,attribute] = thresh
+                    data.loc[data[attribute]<thresh,attribute] = thresh-1
         
-        for idx, point in data.iterrows():
+        if len(data.shape)>1:
+            for idx, point in data.iterrows():
+                if u:
+                    for attribute in self.majority:
+                        maj = self.majority[attribute]
+                        if point[attribute]=="unknown":
+                            point[attribute] = maj
             
-            if u:
-                for attribute in self.majority:
-                    maj = self.majority[attribute]
-                    if point[attribute]=="unknown":
-                        point[attribute] = maj
-            
-            pred.append(self.classify(point, w))
+                pred.append(self.classify(point, w,p))
+                
+        else:
+            pred.append(self.classify(data,w,p))
         
         return pred
     
-    def classify(self, data, w):
+    def classify(self, data, w, p):
         current = self.tree
         
         while True:
@@ -163,7 +172,9 @@ class InfoGain(object):
                 if w:
                     return current.getName()
                 else:
-                    labels = members.value_counts([lab])
+                    labels = members.value_counts([lab],normalize=True)
+                    if p:
+                        return labels.get(1)
                     return labels.index[0][0]
             
             attribute = current.getAttribute()
@@ -177,5 +188,7 @@ class InfoGain(object):
                 if w:
                     return current.getName()
                 else:
-                    labels = members.value_counts([lab])
+                    labels = members.value_counts([lab],normalize=True)
+                    if p:
+                        return labels.get(1)
                     return labels.index[0][0]
