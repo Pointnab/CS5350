@@ -9,25 +9,38 @@ import sys
 import pandas as pd
 import numpy as np
 import Standard
+import Voted
 
 trainFile = sys.argv[1]
 testFile = sys.argv[2]
 mode = sys.argv[3]
 
-trainData = pd.read_csv(trainFile, sep=',', header = 0).to_numpy()
-testData = pd.read_csv(testFile, sep=',', header = 0).to_numpy()
+trainData = pd.read_csv(trainFile, sep=',', header = None).to_numpy()
+testData = pd.read_csv(testFile, sep=',', header = None).to_numpy()
 xTest = testData[:,0:testData.shape[1]-1]
+error = []
 
 if mode == "S":
     model = Standard.Perceptron()
+    
+elif mode == "V":
+    model = Voted.Perceptron()
 
-model.train(trainData,10,0.01)
+else:
+    exit(0)
 
-results = model.test(xTest)
+for i in range(100):
+    model.reset()
+    model.train(trainData,10,0.01)
 
-acc = (testData[:,-1] == results)
+    results = model.test(xTest)
+
+    acc = (testData[:,-1] == results)
+    error.append(1 - sum(acc)/len(acc))
 
 print("Learned Weight Vector:")
 print(model.getWeights())
-print("Accuracy:")
-print(str(sum(acc)/len(acc)))
+if mode == "V":
+    print(model.getCounts())
+print("Average Error:")
+print(np.average(error))
