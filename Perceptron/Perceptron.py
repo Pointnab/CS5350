@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 import Standard
 import Voted
+import Averaged
 
 trainFile = sys.argv[1]
 testFile = sys.argv[2]
@@ -25,6 +26,9 @@ if mode == "S":
     
 elif mode == "V":
     model = Voted.Perceptron()
+    
+elif mode == "A":
+    model = Averaged.Perceptron()
 
 else:
     exit(0)

@@ -1,6 +1,14 @@
 # CS5350
 This is a machine learning library developed by Ryan Lam for CS5350 in University of Utah
 
+The perceptron methods are run through a test file with command line arguments as following:
+Perceptron.py <file path to training data> <file path to test data> <perceptron mode>
+where mode can be:
+"S" for standard perceptron
+"V" for voted perceptron
+"A" for averaged perceptron
+Test will train, test, and reset the model 100 times. Reporting the average test error and the final weights vector
+
 Do not run the run.sh file in the ensemble learning folder, code is too slow
 classes are run through a corresponding test file with command line arguments as following:
 AdaBoostTest.py <file path to training data> <file path to test data> <# of iterations>
