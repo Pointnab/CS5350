@@ -1,5 +1,14 @@
 # CS5350
 This is a machine learning library developed by Ryan Lam for CS5350 in University of Utah
+The SVM algorithm methods are run through a test file with command line arguments as following:
+SVM.py <file path to training data> <file path to test data> <SVM mode> <a or g>
+where mode can be:
+"P" for primal SVM
+"D" for dual SVM (dual SVM is broken and reports nonsense)
+"K" for dual SVM with gaussian kernel (this is adversely affected by the prior mode being broken)
+If the mode is "P", the fourth argument specifies a for the learning rate schedule, a value of 0 uses the simpler schedule
+If the mode is "K", the fourth argument speecifies gamma for the the gaussian kernel
+The test will train each model and report the weight vector and bias for the 3 values of C.
 
 The perceptron methods are run through a test file with command line arguments as following:
 Perceptron.py <file path to training data> <file path to test data> <perceptron mode>
