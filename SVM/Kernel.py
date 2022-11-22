@@ -6,7 +6,7 @@ Created on Tue Nov  1 16:29:02 2022
 """
 
 import numpy as np
-import scipy as sp
+from scipy import optimize
 
 class SVM(object):
     
@@ -32,9 +32,9 @@ class SVM(object):
         fun = lambda a: 0.5 * np.matmul(np.matmul(a.T,np.matmul(y,y.T)*self.kernel(x,x)),a)-np.sum(a)
         cons = ({'type':'eq','fun': lambda a: np.sum(a*y)})
         start = 0.1*np.ones((data.shape[0],1))
-        bnds = sp.optimize.Bounds(0,C)
+        bnds = optimize.Bounds(0,C)
         
-        res = sp.optimize.minimize(fun,start, method = 'SLSQP', bounds = bnds, constraints=cons,options={'disp':True})
+        res = optimize.minimize(fun,start, method = 'SLSQP', bounds = bnds, constraints=cons,options={'disp':True})
         
         a = np.reshape(res.x.copy(),y.shape)
         self.a = a.copy()
